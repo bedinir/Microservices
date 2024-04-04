@@ -10,6 +10,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integration", "Integration", "{CBCEC26F-53D8-4CC2-ACEC-C4C865B56E52}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{D860AF0D-29DA-4A2B-859E-D9BB700DF4CF}"
+	ProjectSection(SolutionItems) = preProject
+		commands.txt = commands.txt
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mango.Services.CuponApi", "Mango.Services.CuponApi\Mango.Services.CuponApi.csproj", "{B4C8D533-9F39-4F09-9247-2A836457CA78}"
 EndProject
