@@ -44,9 +44,90 @@ namespace Mango.Services.CuponApi.Controllers
             try
             {
                 Cupon cupon = _db.Cupons.First(u => u.CuponId == id);
-                _response.Result = _mapper.Map<Cupon>(cupon);
+                _response.Result = _mapper.Map<CuponDto>(cupon);
             }
             catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Message = ex.Message;
+            }
+            return _response;
+        }
+
+        [HttpGet]
+        [Route("getByCode/{codeId}")]
+        public ResponseDto GetBCode(string codeId)
+        {
+            try
+            {
+                Cupon cupon = _db.Cupons.First(c => c.CuponCode.ToLower() == codeId.ToLower());
+                if(cupon == null)
+                {
+                    _response.IsSuccess = false;
+                }
+                else
+                {
+                    _response.Result = _mapper.Map<CuponDto>(cupon);
+                }
+            }
+            catch(Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Message = ex.Message;
+            }
+            return _response;
+        }
+
+        [HttpPost]
+        public ResponseDto Post([FromBody] CuponDto cuponDto)
+        {
+            try
+            {
+                Cupon cupon = _mapper.Map<Cupon>(cuponDto);
+                _db.Cupons.Add(cupon);
+                _db.SaveChanges();
+
+                _response.Result = _mapper.Map<CuponDto>(cuponDto);
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Message = ex.Message;
+            }
+
+            return _response;
+        }
+
+
+        [HttpPut]
+        public ResponseDto Put([FromBody] CuponDto cuponDto)
+        {
+            try
+            {
+                Cupon cupon = _mapper.Map<Cupon>(cuponDto);
+                _db.Cupons.Update(cupon);
+                _db.SaveChanges();
+
+                _response.Result = _mapper.Map<CuponDto>(cupon);
+            }
+            catch(Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Message = ex.Message;
+            }
+            return _response;
+        }
+
+        [HttpDelete]
+        public ResponseDto Delete(int id)
+        {
+            try
+            {
+                Cupon cupon = _db.Cupons.First(c => c.CuponId == id);
+                _db.Cupons.Remove(cupon);
+                _db.SaveChanges();
+            }
+            catch(Exception ex)
             {
                 _response.IsSuccess = false;
                 _response.Message = ex.Message;
