@@ -2,6 +2,7 @@
 {
     public class SD
     {
+        public static string CuponAPIBase { get; set; }
         public enum ApiType
         {
             GET,
