@@ -23,6 +23,10 @@ namespace Mongo.Web.Controllers
             {
                 list = JsonConvert.DeserializeObject<List<CuponDto>>(Convert.ToString(response.Result));
             }
+            else
+            {
+                TempData["error"] = response?.Message;
+            }
             return View(list);
         }
 
@@ -39,7 +43,12 @@ namespace Mongo.Web.Controllers
                 ResponseDto? response = await _cuponService.CreateCuponsAsync(cuponDto);
                 if (response != null && response.IsSuccess)
                 {
+                    TempData["success"] = "Cupon created successfully";
                     return RedirectToAction(nameof(CuponIndex));
+                }
+                else
+                {
+                    TempData["error"] = response?.Message;
                 }
             }
             return View(cuponDto);
@@ -53,7 +62,11 @@ namespace Mongo.Web.Controllers
 				CuponDto? model = JsonConvert.DeserializeObject<CuponDto>(Convert.ToString(response.Result));
                 return View(model);
 			}
-			return NotFound();
+            else
+            {
+                TempData["error"] = response?.Message;
+            }
+            return NotFound();
         }
 
         [HttpPost]
@@ -62,7 +75,12 @@ namespace Mongo.Web.Controllers
             ResponseDto? response = await _cuponService.DeleteCuponsAsync(cuponDto.CuponId);
             if (response != null && response.IsSuccess)
             {
+                TempData["success"] = "Cupon deleted successfully";
                 return RedirectToAction(nameof(CuponIndex));
+            }
+            else
+            {
+                TempData["error"] = response?.Message;
             }
             return View(cuponDto);
         }
