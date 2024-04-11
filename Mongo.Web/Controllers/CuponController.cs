@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Mongo.Web.Service.IService;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Mongo.Web.Controllers
 {
@@ -28,6 +29,20 @@ namespace Mongo.Web.Controllers
         public async Task<IActionResult> CuponCreate()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CuponCreate(CuponDto cuponDto)
+        {
+            if (ModelState.IsValid)
+            {
+                ResponseDto? response = await _cuponService.CreateCuponsAsync(cuponDto);
+                if (response != null && response.IsSuccess)
+                {
+                    return RedirectToAction(nameof(CuponIndex));
+                }
+            }
+            return View(cuponDto);
         }
     }
 }
