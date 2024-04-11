@@ -44,5 +44,27 @@ namespace Mongo.Web.Controllers
             }
             return View(cuponDto);
         }
+
+        public async Task<IActionResult> CuponDelete(int cuponId)
+        {
+			ResponseDto? response = await _cuponService.GetCuponByIdAsync(cuponId);
+			if (response != null && response.IsSuccess)
+			{
+				CuponDto? model = JsonConvert.DeserializeObject<CuponDto>(Convert.ToString(response.Result));
+                return View(model);
+			}
+			return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CuponDelete(CuponDto cuponDto)
+        {
+            ResponseDto? response = await _cuponService.DeleteCuponsAsync(cuponDto.CuponId);
+            if (response != null && response.IsSuccess)
+            {
+                return RedirectToAction(nameof(CuponIndex));
+            }
+            return View(cuponDto);
+        }
     }
 }
