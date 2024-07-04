@@ -24,7 +24,7 @@ namespace Mango.Services.AuthAPI.Controllers
             var errorMessage = await _authService.Register(model);
             if(!string.IsNullOrEmpty(errorMessage))
             {
-                _responseDto.IsSuccess = true;
+                _responseDto.IsSuccess = false;
                 _responseDto.Message = errorMessage;
                 return BadRequest(_responseDto);
             }

@@ -1,3 +1,5 @@
+using Mango.Web.Service;
+using Mango.Web.Service.IService;
 using Mongo.Web.Service;
 using Mongo.Web.Service.IService;
 using Mongo.Web.Utility;
@@ -9,12 +11,14 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<ICuponService, CuponService>();
+builder.Services.AddHttpClient<IAuthService, AuthService>();
 
 SD.CuponAPIBase = builder.Configuration["ServiceUrls:CuponAPI"];
 SD.AuthAPIBase = builder.Configuration["ServiceUrls:AuthAPI"];
 
 
 builder.Services.AddScoped<IBaseService,BaseService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ICuponService,CuponService>();
 
 var app = builder.Build();
